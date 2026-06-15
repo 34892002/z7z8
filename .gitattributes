@@ -1,7 +1,7 @@
-# 璁剧疆榛樿琛屼负锛屽湪涓诲垎鏀笂鎵€鏈夋枃浠朵娇鐢?LF 琛屽熬绗?
+# set default behavior: all text files use LF line endings
 * text=auto eol=lf
 
-# 鏄庣‘澹版槑浜岃繘鍒舵枃浠讹紝闃叉 Git 灏濊瘯淇敼
+# declare binary files to prevent Git from modifying them
 *.png binary
 *.jpg binary
 *.gif binary
@@ -10,21 +10,21 @@
 *.tar.gz binary
 *.gz binary
 
-# Shell 鑴氭湰蹇呴』浣跨敤 LF
+# shell scripts must use LF
 *.sh text eol=lf
 *.bash text eol=lf
 
-# 鏂囨湰鏂囦欢浣跨敤 LF
+# text files use LF
 *.txt text eol=lf
 *.md text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
 *.json text eol=lf
 
-# Python 鑴氭湰浣跨敤 LF
+# python scripts use LF
 *.py text eol=lf
 
-# 閰嶇疆鏂囦欢浣跨敤 LF
+# config files use LF
 *.conf text eol=lf
 *.cfg text eol=lf
 *.ini text eol=lf
