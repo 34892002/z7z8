@@ -12,7 +12,7 @@ Linux 工具脚本集合。
 
 ```bash
 # 克隆仓库
-git clone https://github.com/<your-username>/z7z8.git
+git clone https://github.com/34892002/z7z8.git
 cd z7z8
 
 # 添加执行权限
