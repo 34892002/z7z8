@@ -1,0 +1,31 @@
+﻿# 璁剧疆榛樿琛屼负锛屽湪涓诲垎鏀笂鎵€鏈夋枃浠朵娇鐢?LF 琛屽熬绗?
+* text=auto eol=lf
+
+# 鏄庣‘澹版槑浜岃繘鍒舵枃浠讹紝闃叉 Git 灏濊瘯淇敼
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.tar.gz binary
+*.gz binary
+
+# Shell 鑴氭湰蹇呴』浣跨敤 LF
+*.sh text eol=lf
+*.bash text eol=lf
+
+# 鏂囨湰鏂囦欢浣跨敤 LF
+*.txt text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+
+# Python 鑴氭湰浣跨敤 LF
+*.py text eol=lf
+
+# 閰嶇疆鏂囦欢浣跨敤 LF
+*.conf text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+*.env text eol=lf

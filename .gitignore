@@ -1,0 +1,43 @@
+﻿# 鎿嶄綔绯荤粺鐢熸垚鐨勬枃浠?
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE 鐢熸垚鐨勬枃浠?
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 鏃ュ織鍜屼复鏃舵枃浠?
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# 缂栬瘧杈撳嚭
+*.o
+*.out
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 鐜鍙橀噺鏂囦欢锛堝鏋滃寘鍚晱鎰熶俊鎭級
+.env
+.env.local
+.env.*.local
+
+# 渚濊禆鐩綍
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+*.pyo
