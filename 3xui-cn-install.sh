@@ -1115,17 +1115,17 @@ install_x-ui() {
 
     # Download resources
     if [ $# == 0 ]; then
-        tag_version=$(curl -Ls "https://ghfast.top/https://api.github.com/repos/MHSanaei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+        tag_version=$(curl -Ls "https://gh-proxy.com/https://api.github.com/repos/MHSanaei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
         if [[ ! -n "$tag_version" ]]; then
             echo -e "${yellow}Trying to fetch version with IPv4...${plain}"
-            tag_version=$(curl -4 -Ls "https://ghfast.top/https://api.github.com/repos/MHSanaei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+            tag_version=$(curl -4 -Ls "https://gh-proxy.com/https://api.github.com/repos/MHSanaei/3x-ui/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
             if [[ ! -n "$tag_version" ]]; then
                 echo -e "${red}Failed to fetch x-ui version, it may be due to GitHub API restrictions, please try it later${plain}"
                 exit 1
             fi
         fi
         echo -e "Got x-ui latest version: ${tag_version}, beginning the installation..."
-        curl -4fLRo ${xui_folder}-linux-$(arch).tar.gz https://ghfast.top/https://github.com/MHSanaei/3x-ui/releases/download/${tag_version}/x-ui-linux-$(arch).tar.gz
+        curl -4fLRo ${xui_folder}-linux-$(arch).tar.gz https://gh-proxy.com/https://github.com/MHSanaei/3x-ui/releases/download/${tag_version}/x-ui-linux-$(arch).tar.gz
         if [[ $? -ne 0 ]]; then
             echo -e "${red}Downloading x-ui failed, please be sure that your server can access GitHub ${plain}"
             exit 1
@@ -1140,7 +1140,7 @@ install_x-ui() {
             exit 1
         fi
 
-        url="https://ghfast.top/https://github.com/MHSanaei/3x-ui/releases/download/${tag_version}/x-ui-linux-$(arch).tar.gz"
+        url="https://gh-proxy.com/https://github.com/MHSanaei/3x-ui/releases/download/${tag_version}/x-ui-linux-$(arch).tar.gz"
         echo -e "Beginning to install x-ui $1"
         curl -4fLRo ${xui_folder}-linux-$(arch).tar.gz ${url}
         if [[ $? -ne 0 ]]; then
@@ -1148,7 +1148,7 @@ install_x-ui() {
             exit 1
         fi
     fi
-    curl -4fLRo /usr/bin/x-ui-temp https://ghfast.top/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.sh
+    curl -4fLRo /usr/bin/x-ui-temp https://gh-proxy.com/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.sh
     if [[ $? -ne 0 ]]; then
         echo -e "${red}Failed to download x-ui.sh${plain}"
         exit 1
@@ -1200,7 +1200,7 @@ install_x-ui() {
     fi
 
     if [[ $release == "alpine" ]]; then
-        curl -4fLRo /etc/init.d/x-ui https://ghfast.top/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.rc
+        curl -4fLRo /etc/init.d/x-ui https://gh-proxy.com/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.rc
         if [[ $? -ne 0 ]]; then
             echo -e "${red}Failed to download x-ui.rc${plain}"
             exit 1
@@ -1257,13 +1257,13 @@ install_x-ui() {
             echo -e "${yellow}Service files not found in tar.gz, downloading from GitHub...${plain}"
             case "${release}" in
                 ubuntu | debian | armbian)
-                    curl -4fLRo ${xui_service}/x-ui.service https://ghfast.top/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.service.debian > /dev/null 2>&1
+                    curl -4fLRo ${xui_service}/x-ui.service https://gh-proxy.com/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.service.debian > /dev/null 2>&1
                     ;;
                 arch | manjaro | parch)
-                    curl -4fLRo ${xui_service}/x-ui.service https://ghfast.top/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.service.arch > /dev/null 2>&1
+                    curl -4fLRo ${xui_service}/x-ui.service https://gh-proxy.com/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.service.arch > /dev/null 2>&1
                     ;;
                 *)
-                    curl -4fLRo ${xui_service}/x-ui.service https://ghfast.top/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.service.rhel > /dev/null 2>&1
+                    curl -4fLRo ${xui_service}/x-ui.service https://gh-proxy.com/https://raw.githubusercontent.com/MHSanaei/3x-ui/main/x-ui.service.rhel > /dev/null 2>&1
                     ;;
             esac
 
