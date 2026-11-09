@@ -57,14 +57,31 @@ const ALLOW_FALLBACK = process.env.CLINE_PIN_FALLBACK === '1';
 // 置 1：逐请求访问日志也不写文件；异常和未钉住仍然输出到控制台。
 const QUIET = process.env.CLINE_PIN_QUIET === '1';
 // 选填：配置后无条件覆盖请求里的 Authorization，客户端没带也会补上。
-// 留空则透传客户端自己的 key。这里的字面量只是兜底默认值——真 key 写进源码等于公开，
-// 建议改成从环境变量进来，或至少确认这个文件不进版本库。
-const API_KEY = (process.env.CLINE_PIN_API_KEY || 'REDACTED-LEAKED-KEY').trim();
+// 留空则透传客户端自己的 key。
+// 读取顺序：环境变量 CLINE_PIN_API_KEY -> 本目录 cline-pin.key -> 空（透传）。
+// 真 key 一律不要写进源码：这个文件是进版本库的，写死等于公开。
+const API_KEY = (process.env.CLINE_PIN_API_KEY || readKeyFile()).trim();
 // 请求体上限，超过直接回 413，避免一个超大上传把内存吃光。
 const MAX_BODY = 64 * 1024 * 1024;
 
 // ---- 日志：同时写控制台和程序目录下的文件 ----
 const HERE = path.dirname(fileURLToPath(import.meta.url));
+
+/**
+ * 本机 key 文件：与源码同目录的 cline-pin.key（已在 .gitignore 里排除）。
+ * 没有这个文件是正常情况——此时 CLINE_PIN_API_KEY 没配就透传客户端的 key。
+ */
+function readKeyFile() {
+  try {
+    const file = path.join(path.dirname(fileURLToPath(import.meta.url)), 'cline-pin.key');
+    if (!fs.existsSync(file)) return '';
+    return fs.readFileSync(file, 'utf8').trim();
+  } catch (e) {
+    process.stderr.write(`读取 cline-pin.key 失败: ${e.message}\n`);
+    return '';
+  }
+}
+
 const LOG_FILE =
   process.env.CLINE_PIN_LOG === 'off' ? null : process.env.CLINE_PIN_LOG || path.join(HERE, 'cline-pin.log');
 const MAX_LOG_BYTES = 5 * 1024 * 1024;

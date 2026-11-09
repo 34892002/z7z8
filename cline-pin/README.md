@@ -70,7 +70,7 @@ POST /api/v1/chat/completions finalProvider=deepseek
 |---|---|---|
 | `CLINE_PIN_PORT` | `8788` | 监听端口 |
 | `CLINE_PIN_HOST` | `127.0.0.1` | 只监听本机，不对外暴露 |
-| `CLINE_PIN_API_KEY` | 空 | 选填。配了就用它强制覆盖请求里的 key，客户端没带也会补上；值为 `sk-xxx` 时自动加 `Bearer ` 前缀，写了 `Bearer sk-xxx` 则原样用 |
+| `CLINE_PIN_API_KEY` | 空 | 选填。配了就用它强制覆盖请求里的 key，客户端没带也会补上；值为 `sk-xxx` 时自动加 `Bearer ` 前缀，写了 `Bearer sk-xxx` 则原样用。不设时读本目录的 `cline-pin.key` |
 | `CLINE_PIN_ONLY` | `deepseek` | 逗号分隔，如 `deepseek,fireworks` |
 | `CLINE_PIN_HAS` | 空 | 额外追加的 has，如 `vision,tool-use` |
 | `CLINE_PIN_FALLBACK` | `0` | 置 1 时上游 4xx/5xx 会去掉注入重试一次（会退回免费私有池，等于放弃钉住） |
@@ -89,6 +89,25 @@ POST /api/v1/chat/completions finalProvider=deepseek
 只对 model 名包含 `deepseek` 的请求注入（`CLINE_PIN_MODEL_FILTER`）。这样以后往同一个 `cline` provider 里加别的模型，不会被强行钉到 DeepSeek。
 
 配了 `CLINE_PIN_API_KEY` 时，代理会在转发前把 `Authorization` 换成它（同时覆盖客户端发来的 `api-key` / `x-api-key`），不区分接口和模型，客户端带不带 key 都一样。启动 banner 的「强制 key」行和 `/_health` 里的 `pin.authOverride` 可以确认是否生效（都不会打印 key 本体）。
+
+### key 放哪
+
+**不要把 key 写进源码。** `proxy.mjs` 是进版本库的，写死的 key 等于公开——这个仓库就发生过一次，只能换 key 才能收场。
+
+代理按这个顺序取 key：
+
+1. 环境变量 `CLINE_PIN_API_KEY`
+2. 本目录的 `cline-pin.key`（已在 `.gitignore` 里，不会进仓库）
+3. 都没有 → 透传客户端自己带的 key
+
+最省事的是第 2 种，写一行就行：
+
+```
+# D:\z7z8\cline-pin\cline-pin.key  （单行，不要加引号）
+sk_xxxxxxxx
+```
+
+如果想用环境变量，`start-cline-pin.cmd` 里加一行 `set CLINE_PIN_API_KEY=sk_xxx` 也可以，但那个文件同样进版本库，**别把真 key 写进去**。
 
 ## 代价
 
